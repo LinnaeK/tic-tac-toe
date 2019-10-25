@@ -11,7 +11,8 @@ let msg = ""
 function init(){
     document.addEventListener('click', function(evt){
         numClkd = parseInt(evt.target.id) 
-        if(!playerX.contains(numClkd)&&!playerO.contains(numClkd)){
+        console.log(evt.target)
+        if(!playerX.includes(numClkd)&&!playerO.includes(numClkd)){
             if (turn === 1){
                 playerX.push(numClkd)
                 isWinning(playerX)
@@ -40,21 +41,23 @@ function isWinning(plyr){
               i = winCombs[idx].length 
             }else if(i+1 === winCombs[idx].length){
               win = turn;
+              console.log(winCombs.length)
+              idx = winCombs.length
               console.log('I won')
+              showMsg(win)
+              return
             }
-        }
-        if(win === true){
-          idx = winCombs.length + 1
         }
       }
 }
 
 function showMsg(win){
+    console.log('ran show msg')
     if(win === 2){
         msg = "It's a Cat's Game!"
-    }else if(won===1){
+    }else if(win===1){
         msg = "Congratulations Player X!"
-    }else if(won ===-1){
+    }else if(win ===-1){
         msg = "Congratulations Player O!"
     }
     document.getElementById('msg').innerText = msg
