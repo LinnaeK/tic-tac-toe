@@ -1,24 +1,31 @@
 const winCombs = [[0, 1, 2],[3, 4, 5],[6, 7, 8], [0,3,6],[1, 4, 7], [2, 5, 8],[0, 4, 8],[2,4,6]]
+const MAX_TURNS = 9
 
 let playerX = [];
 let playerO = [];
 let turn = 1;
 let win;
+let msg = ""
+
 
 function init(){
     document.addEventListener('click', function(evt){
         numClkd = parseInt(evt.target.id) 
-        if (turn === 1){
-            playerX.push(numClkd)
-            isWinning(playerX)
-            console.log('playerX= ' + playerX)
-            turn *= -1
-        }else{
-            playerO.push(numClkd)
-            isWinning(playerO)
-            console.log('playerO+ ' + playerO)
-            turn*=-1
-        }
+        if(!playerX.contains(numClkd)&&!playerO.contains(numClkd)){
+            if (turn === 1){
+                playerX.push(numClkd)
+                isWinning(playerX)
+                console.log('playerX= ' + playerX)
+                turn *= -1
+            }else{
+                playerO.push(numClkd)
+                isWinning(playerO)
+                console.log('playerO+ ' + playerO)
+                turn*=-1
+            }
+        }  else if((playerX.length+playerO.length)===MAX_TURNS){
+            showMsg(2)
+        } 
     }
     );
 }
@@ -41,4 +48,16 @@ function isWinning(plyr){
         }
       }
 }
+
+function showMsg(win){
+    if(win === 2){
+        msg = "It's a Cat's Game!"
+    }else if(won===1){
+        msg = "Congratulations Player X!"
+    }else if(won ===-1){
+        msg = "Congratulations Player O!"
+    }
+    document.getElementById('msg').innerText = msg
+}
+
 init()
