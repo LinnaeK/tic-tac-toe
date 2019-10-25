@@ -10,23 +10,30 @@ let msg = ""
 
 function init(){
     document.addEventListener('click', function(evt){
-        numClkd = parseInt(evt.target.id) 
-        console.log(evt.target)
-        if(!playerX.includes(numClkd)&&!playerO.includes(numClkd)){
-            if (turn === 1){
-                playerX.push(numClkd)
-                isWinning(playerX)
-                console.log('playerX= ' + playerX)
-                turn *= -1
-            }else{
-                playerO.push(numClkd)
-                isWinning(playerO)
-                console.log('playerO+ ' + playerO)
-                turn*=-1
-            }
-        }  else if((playerX.length+playerO.length)===MAX_TURNS){
-            showMsg(2)
-        } 
+         if (evt.target.id === 'reset'){
+             console.log('caught reset')
+            reset()            
+         } else{  
+            numClkd = parseInt(evt.target.id) 
+            console.log(evt.target)
+            if(!playerX.includes(numClkd)&&!playerO.includes(numClkd)){
+                if (turn === 1){
+                    playerX.push(numClkd)
+                    evt.target.innerText = 'X'
+                    isWinning(playerX)
+                    console.log('playerX= ' + playerX)
+                    turn *= -1
+                }else{
+                    playerO.push(numClkd)
+                    evt.target.innerText = 'O'
+                    isWinning(playerO)
+                    console.log('playerO+ ' + playerO)
+                    turn*=-1
+                }
+            }  else if((playerX.length+playerO.length)===MAX_TURNS){
+                showMsg(2)
+            } 
+        }
     }
     );
 }
@@ -36,7 +43,6 @@ function isWinning(plyr){
         for (let i = 0; i < winCombs[idx].length; i++){
           console.log('ran' +i)
             if(!plyr.includes(winCombs[idx][i])){
-              win = false;
               console.log('player doesnt have a winning combo, next')
               i = winCombs[idx].length 
             }else if(i+1 === winCombs[idx].length){
@@ -47,6 +53,9 @@ function isWinning(plyr){
               showMsg(win)
               return
             }
+        }
+        if(idx+1 === winCombs.length && (playerX.length+playerO.length===MAX_TURNS)){
+            showMsg(2)
         }
       }
 }
@@ -61,6 +70,20 @@ function showMsg(win){
         msg = "Congratulations Player O!"
     }
     document.getElementById('msg').innerText = msg
+}
+
+function reset(){
+    playerX = [];
+    playerO = [];
+    turn = 1;
+    win;
+    msg = "" 
+    document.querySelectorAll('.square').forEach(function(tag){
+        tag.innerText=""
+        console.log(tag)
+    }
+    );
+    init()
 }
 
 init()
