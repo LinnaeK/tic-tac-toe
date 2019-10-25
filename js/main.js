@@ -7,7 +7,7 @@ let turn = 1;
 let win;
 let msg = ""
 
-
+console.log("I'm testing my switchPractice branch")
 function init(){
     document.addEventListener('click', function(evt){
          if (evt.target.id === 'reset'){
