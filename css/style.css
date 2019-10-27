@@ -2,11 +2,12 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-style: 'Acme', sans-serif;
+    font-family: 'Acme', sans-serif;
 }
 
 h1{
     text-align: center;
+    font-size: 4rem;
 }
 
 .square{
@@ -40,5 +41,6 @@ h1{
     height: 4rem;
     Width: 6rem;
     font-size: 1.5rem;
-    margin: 2rem
+    margin: 2rem;
+    font-family: 'Acme', sans-serif;
 }
