@@ -4,40 +4,54 @@ const MAX_TURNS = 9
 let playerX = [];
 let playerO = [];
 let turn = 1;
-let win;
+let win = null;
 let msg = ""
 
 console.log("I'm testing my switchPractice branch")
 function init(){
     document.addEventListener('click', function(evt){
-         if (evt.target.id === 'reset'){
-             console.log('caught reset')
-            reset()            
-         } else{  
-            numClkd = parseInt(evt.target.id) 
-            console.log(evt.target)
-            if(!playerX.includes(numClkd)&&!playerO.includes(numClkd)){
-                if (turn === 1){
-                    playerX.push(numClkd)
-                    evt.target.innerText = 'X'
-                    isWinning(playerX)
-                    console.log('playerX= ' + playerX)
-                    turn *= -1
-                }else{
-                    playerO.push(numClkd)
-                    evt.target.innerText = 'O'
-                    isWinning(playerO)
-                    console.log('playerO+ ' + playerO)
-                    turn*=-1
-                }
-            }  else if((playerX.length+playerO.length)===MAX_TURNS){
-                showMsg(2)
-            } 
+        let target = parseInt(evt.target.id)
+        switch(true){
+            case target == NaN:
+                console.log('caught reset')
+                reset();
+                break;
+            case playerX.length+playerO.length===MAX_TURNS:
+                break;
+            case win != null:
+                break;
+            case playerX.includes(target):
+                break;
+            case playerO.includes(target):
+                break;
+            default:
+                renderPlay(target)
+                break;
+            
         }
     }
     );
 }
 
+function renderPlay(numClkd){
+    let brdDisp = document.getElementById(numClkd)
+    switch(turn){
+        case 1:
+            playerX.push(numClkd)
+            brdDisp.innerText = 'X'
+            isWinning(playerX)
+            console.log('playerX= ' + playerX)
+            turn *= -1
+            break;
+        case -1:
+            playerO.push(numClkd)
+            brdDisp.innerText = 'O'
+            isWinning(playerO)
+            console.log('playerO+ ' + playerO)
+            turn*=-1
+            break;
+    }
+}
 function isWinning(plyr){
     for(let idx = 0; idx<winCombs.length; idx++){
         for (let i = 0; i < winCombs[idx].length; i++){
@@ -62,12 +76,16 @@ function isWinning(plyr){
 
 function showMsg(win){
     console.log('ran show msg')
-    if(win === 2){
-        msg = "It's a Cat's Game!"
-    }else if(win===1){
+    switch(win){
+    case 2:
+        msg = "It's a Cat's Game!";
+        break;
+    case 1:
         msg = "Congratulations Player X!"
-    }else if(win ===-1){
+        break;
+   case -1:
         msg = "Congratulations Player O!"
+        break;
     }
     document.getElementById('msg').innerText = msg
 }
@@ -76,7 +94,7 @@ function reset(){
     playerX = [];
     playerO = [];
     turn = 1;
-    win;
+    win = null;
     msg = "" 
     document.querySelectorAll('.square').forEach(function(tag){
         tag.innerText=""
