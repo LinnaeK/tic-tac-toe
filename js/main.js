@@ -5,16 +5,19 @@ let playerX = [];
 let playerO = [];
 let turn = 1;
 let win = null;
-let msg = ""
+let msg = "  "
 
 
 // listens for users input and verifies that it is a legal play. If legal renderPlay() is called 
 function init(){
     document.addEventListener('click', function(evt){
-        let target = parseInt(evt.target.id)
+        console.log('click noticed', evt.target.id)
+        let target = evt.target.id
         switch(true){
-            case target == NaN:
+            case target === 'reset':
                 reset();
+                break;
+            case target === "":
                 break;
             case playerX.length+playerO.length===MAX_TURNS:
                 break;
@@ -25,13 +28,14 @@ function init(){
             case playerO.includes(target):
                 break;
             default:
-                renderPlay(target)
+                renderPlay(parseInt(target))
                 break;
             
         }
     }
     );
 }
+
 
 // Adds player's move to their array, changes display to reflect play, calls isWinning, and then switches turn var
 function renderPlay(numClkd){
@@ -64,7 +68,6 @@ function isWinning(plyr){
               break;
             case i+1 === winCombs[idx].length:
               win = turn;
-              idx = winCombs.length
               showMsg(win)
               break;
             }
@@ -85,11 +88,12 @@ function showMsg(win){
         case 1:
             msg = "Congratulations Player X!"
             break;
-    case -1:
+        case -1:
             msg = "Congratulations Player O!"
             break;
         }
     document.getElementById('msg').innerText = msg
+    // init()
     window.setTimeout(reset, 1*1000)
 }
 
@@ -99,14 +103,13 @@ function reset(){
     playerO = [];
     turn *= -1;
     win = null;
-    msg = ''
-    document.getElementById('msg').innerText = msg
+    msg = "  ";
+    document.getElementById('msg').innerText = msg;
     document.querySelectorAll('.square').forEach(function(tag){
         tag.innerText=""
         console.log(tag)
     }
     );
-    init()
 }
 
 init()
