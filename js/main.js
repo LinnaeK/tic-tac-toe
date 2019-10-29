@@ -5,7 +5,7 @@ let playerX = [];
 let playerO = [];
 let turn = 1;
 let win = null;
-let msg = "  "
+let msg = "Ready? Set. Go!  "
 
 
 // listens for users input and verifies that it is a legal play. If legal renderPlay() is called 
@@ -103,7 +103,7 @@ function reset(){
     playerO = [];
     turn *= -1;
     win = null;
-    msg = "  ";
+    msg = "Ready? Set. Go!";
     document.getElementById('msg').innerText = msg;
     document.querySelectorAll('.square').forEach(function(tag){
         tag.innerText=""
